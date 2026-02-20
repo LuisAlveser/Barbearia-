@@ -25,7 +25,7 @@ async function cadastro (req,res) {
         }
         
     } catch (error) {
-        console.error("ERRO DETALHADO NO TERMINAL:", error);
+       
        return res.status(500).json(error);  
     }
     

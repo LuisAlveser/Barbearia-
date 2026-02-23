@@ -8,8 +8,8 @@ export default  (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Barbeiro.belongsTo(models.Usuario,{foreignKey:"id_user"});
-      Barbeiro.hasMany(models.Cortes,{foreignKey:"id_barbeiro",onDelete:"CASCADE"})
+      Barbeiro.belongsTo(models.Usuario,{foreignKey:"id_user",});
+      Barbeiro.hasMany(models.Cortes,{foreignKey:"id_barbeiro",onDelete:"CASCADE",hooks:true})
       Barbeiro.hasMany(models.Agendamentos,{foreignKey:"id_barbeiro"})
     }
   }

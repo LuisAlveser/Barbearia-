@@ -12,8 +12,13 @@ async function criar(req,res) {
          
         const barbeirocriado=await Barbeiro.create(barbeiro);
     
+          const r =await Usuario.update({regra:'BARBEIRO'},{where:{id:barbeiro.id_user}})
+         
+          
         if(barbeirocriado){
-            return res.status(201).json({mensaagem:"Barbeiro criado com suceso"})
+            return res.status(201).json({mensagem:"Barbeiro criado com suceso"})
+        }else{
+             return res.status(404).json({mensagem:"Id de usuário não encontrada"})
         }
         
     } catch (error) {

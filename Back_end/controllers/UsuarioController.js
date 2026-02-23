@@ -2,7 +2,7 @@ import token  from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import  db from "../models/index.js"
 import { where } from "sequelize";
-const { Usuario } = db;
+const { Usuario,Barbeiro } = db;
 async function cadastro (req,res) {
   
     try {
@@ -78,8 +78,18 @@ async function atualizar(req,res) {
 async function excluir (req,res) {
     const id =req.params.id
         try {
-    const usuario= await Usuario.destroy({where:{id:id}})
+    const usuario= await Usuario.findByPk(id);
+    
     if(usuario){
+         if(usuario.regra==="BARBEIRO"){
+            console.log(usuario.regra)
+        const barbeiro =await  Barbeiro.findOne({where:{id_user:usuario.id}})
+        if(barbeiro){
+            await barbeiro.destroy();
+        }
+         
+     }
+         await usuario.destroy();
         return res.status(200).json({mensagem:"Usuário excluido com sucesso "})
     }else{
           return res.status(404).json({mensagem:"Usuário não encontrado"})

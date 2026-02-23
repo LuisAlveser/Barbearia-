@@ -21,7 +21,7 @@ async function cadastro (req,res) {
         if(usuario){
          const tokenPayload = { id: usuario.id, email: usuario.email };
           const user_token  =  token.sign(tokenPayload,"Ola",{expiresIn: '1h'});
-          return res.status(201).json({toke:user_token})
+          return res.status(201).json({token:user_token})
         }
         
     } catch (error) {
@@ -41,7 +41,7 @@ async function login(req,res) {
     const usuariosenha=usuario.senha;
     const comparacao =await bcrypt.compare(senha,usuariosenha);
     if(!usuario||!comparacao){
-       return  res.status(404).json({messagem:"Senha ou Email estão errados"})
+       return  res.status(404).json({mensagem:"Senha ou Email estão errados"})
     }else{
         const tokenPayload = { id: usuario.id, email: usuario.email };
         const user_token  =  token.sign(tokenPayload,"Ola",{expiresIn: '1h'});
@@ -77,11 +77,14 @@ async function atualizar(req,res) {
 }
 async function excluir (req,res) {
     const id =req.params.id
+        try {
     const usuario= await Usuario.destroy({where:{id:id}})
     if(usuario){
-        return res.status(200).json({mensaagem:"Usuário excluido com sucesso "})
+        return res.status(200).json({mensagem:"Usuário excluido com sucesso "})
+    }else{
+          return res.status(404).json({mensagem:"Usuário não encontrado"})
     }
-    try {
+
         
     } catch (error) {
          return res.status(500).json({mensagem:"Erro ao excluir  usuário",error})

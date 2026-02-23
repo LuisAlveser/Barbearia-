@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
      Usuario.hasMany(models.Barbeiro,{foreignKey:"id_user",onDelete:"CASCADE",hooks:true});
+     Usuario.hasMany(models.Agendamentos,{foreignKey:"id_cliente"})
     }
   }
   Usuario.init({

@@ -20,7 +20,7 @@ async function cadastro (req,res) {
         
         if(usuario){
          const tokenPayload = { id: usuario.id, email: usuario.email };
-          const user_token  =  token.sign(tokenPayload,"Olá",{expiresIn: '1h'});
+          const user_token  =  token.sign(tokenPayload,"Ola",{expiresIn: '1h'});
           return res.status(201).json({toke:user_token})
         }
         
@@ -44,7 +44,7 @@ async function login(req,res) {
        return  res.status(404).json({messagem:"Senha ou Email estão errados"})
     }else{
         const tokenPayload = { id: usuario.id, email: usuario.email };
-        const user_token  =  token.sign(tokenPayload,"Olá",{expiresIn: '1h'});
+        const user_token  =  token.sign(tokenPayload,"Ola",{expiresIn: '1h'});
         return res.status(200).json({token:user_token})
     }
 } catch (error) {

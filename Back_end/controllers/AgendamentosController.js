@@ -24,10 +24,10 @@ async function criarHorario(req,res) {
         data: dataAgendamento.toISOString(),
         cancelamento:false
     }
+   
+     const verifica_data=await Agendamentos.findOne({where:{data:agendamento.data}})
     
-     const verifica_data=await Agendamentos.findOne({data:agendamento.data})
-    
-    if(verifica_data.cancelamento){
+    if(verifica_data){
          return res.status(500).json({mensagem:"O horário indisponível"});
     }
     

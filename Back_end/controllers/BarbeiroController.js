@@ -32,7 +32,7 @@ async function atualizar(req,res) {
             bio:req.body.bio
          }
          const babeiroatualizado=await Barbeiro.update(barbeiro,{where:{id_user:id_user}})
-         if(babeiroatualizado>0){
+         if(babeiroatualizado.length > 0){
              return res.status(200).json({mensagem:"Barbeiro atualizado com sucesso"})
          }else{
              return res.status(404).json({mensagem:"Barbeiro não encontrado"})

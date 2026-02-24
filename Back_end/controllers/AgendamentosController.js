@@ -1,12 +1,16 @@
 import  db from "../models/index.js"
 import { Model, where } from "sequelize";
-const {Agendamentos} = db;
+const {Agendamentos,Usuario,Barbeiro} = db;
 import { parseISO, isBefore, getHours, startOfHour } from 'date-fns';
 
 async function criarHorario(req,res) {
 
    try {
-    const data= req.body.data
+    let data= req.body.data
+    if (data.endsWith('Z')) {
+      data = data.slice(0, -1); 
+    }
+  
     const dataAgendamento = startOfHour(parseISO(data));
        
     if (isBefore(dataAgendamento, new Date())) {
@@ -16,12 +20,17 @@ async function criarHorario(req,res) {
 
    if (hour < 8 || hour >= 18) {
      return res.status(500).json({mensagem:"O prestador não atende neste horário."});
-}
-
+} 
+    const cliente= await Usuario.findByPk(req.body.id_cliente)
+    const barbeiro= await Barbeiro.findByPk(req.body.id_barbeiro)
+   
+    if(!cliente||!barbeiro){
+         return res.status(404).json({mensagem:"Usuário ou Barbeiro não existem"});
+    }
     const agendamento={
          id_cliente: req.body.id_cliente,
         id_barbeiro: req.body.id_barbeiro,
-        data: dataAgendamento.toISOString(),
+        data: req.body.data,
         cancelamento:false
     }
    
@@ -77,8 +86,10 @@ async function cancelarAgendamento(req,res) {
         const id_agendamento=req.params.id
      
        const  agendamento= await Agendamentos.update({cancelamento:true},{where:{id:id_agendamento}})
-       if(agendamento.length>0){
+       if(agendamento>0){
            return res.status(200).json({mensagem:"Cancelamento realizado com sucesso"})
+       }else{
+          return res.status(404).json({mensagem:"Esse Horário não exise"})
        }
     } catch (error) {
          return  res.status(500).json({mensagem:"Erro em cancelar  agendamentos",error})

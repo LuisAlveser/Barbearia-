@@ -13,7 +13,7 @@ async function adicionarCorte(req,res) {
         const cortecriado= await Cortes.create(corte)
     
         if(cortecriado){
-            return res.status(201).json({mensaage:"Corte criado com suceso"})
+            return res.status(201).json({mensagem:"Corte criado com suceso"})
         }
         
     } catch (error) {
@@ -27,9 +27,9 @@ async function excluir(req,res) {
         const id=req.params.id
         const corte=await Cortes.destroy({where:{id:id}});
         if(corte){
-            return res.status(200).json({mensaage:"Corte excluido  com suceso"})
+            return res.status(200).json({mensagem:"Corte excluido  com suceso"})
         }else{
-             return res.status(404).json({mensaage:"Corte não encontrado"})
+             return res.status(404).json({mensagem:"Corte não encontrado"})
         }
         
     } catch (error) {
@@ -45,7 +45,7 @@ async function atualizar(req,res) {
         preco:req.body.preco
         }
         const corteatualizado=await Cortes.update(corte,{where:{id:id}})
-        if(corteatualizado>0){
+        if(corteatualizado.length>0){
             return res.status(200).json({mensagem:"Cortes atualizado com sucesso"})
         }else{
              return res.status(404).json({mensagem:"Corte não encontrado"})
@@ -59,7 +59,7 @@ async function listarCortesBarbeiro(req,res) {
     const id_barbeiro=req.params.id_barbeiro
     try {
         const cortes=await Cortes.findAll({where:{id_barbeiro:id_barbeiro}})
-        if(cortes){
+        if(cortes.length > 0){
             return res.status(200).json(cortes)
         }else{
            return res.status(404).json({mensagem:"Não existem cortes relacionados a esse barbeiro"}) 

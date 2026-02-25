@@ -8,4 +8,4 @@ router.post("/:id_user",BarbeiroController.criar);
 router.patch("/:id_user",BarbeiroController.atualizar);
 router.get("/",BarbeiroController.buscarBarbeiros);
 router.get("/:id",BarbeiroController.buscarPorId);
-export default{router};
+export default router;

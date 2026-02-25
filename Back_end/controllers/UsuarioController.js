@@ -19,7 +19,7 @@ async function cadastro (req,res) {
         const usuario= await Usuario.create(user);
         
         if(usuario){
-         const tokenPayload = { id: usuario.id, email: usuario.email };
+         const tokenPayload = { id: usuario.id, email: usuario.email,regra:usuario.regra,nome:usuario.nome };
           const user_token  =  token.sign(tokenPayload,"Ola",{expiresIn: '1h'});
           return res.status(201).json({token:user_token})
         }
@@ -43,7 +43,7 @@ async function login(req,res) {
     if(!usuario||!comparacao){
        return  res.status(404).json({mensagem:"Senha ou Email estão errados"})
     }else{
-        const tokenPayload = { id: usuario.id, email: usuario.email };
+        const tokenPayload = { id: usuario.id, email: usuario.email ,regra:usuario.regra,nome:usuario.nome};
         const user_token  =  token.sign(tokenPayload,"Ola",{expiresIn: '1h'});
         return res.status(200).json({token:user_token})
     }

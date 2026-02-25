@@ -6,7 +6,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color:rgb(26, 33, 49)
+  background-color:rgb(26, 33, 49);
 
   
 }
@@ -23,13 +23,6 @@ a {
   color: white;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
 
 .texto_form{
     margin-top: 100px;

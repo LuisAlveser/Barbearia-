@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaSpinner } from "react-icons/fa";
+import { useNavigate} from 'react-router-dom';
 const cadastroSchema = z.object({
   nome: z.string().min(3, "O nome deve ter pelo menos 3 caracteres"),
   email: z.string().email("Insira um e-mail válido"),
@@ -22,7 +23,7 @@ const loginSchema = z.object({
 function Formulario(){
   const [carregando,setCarregando]=useState(false)
   const [logado,setLogado]=useState(false)
-
+  const navegation=useNavigate();
 
  const { 
     register, //Pega as informações dos inputs
@@ -47,6 +48,8 @@ const Cadastro= async (data)=>{
     if(response.data){
       setCarregando(false)
       localStorage.setItem("token",response.data.token)
+      navegation("/Tela_Principal", { state: { dados: response.data } })
+
        console.log("Cadastro e login realizados!");
     } else {
        setCarregando(false)
@@ -66,7 +69,7 @@ const Cadastro= async (data)=>{
     <div className='Formulario'>
       <form className="form" onSubmit={handleSubmit(Cadastro)}>
          <h1 className='texto_form'>{logado?"Login":"Cadastre-se"}</h1>
-         {logado?"" 
+         {logado?null 
          :<input type="text" placeholder='Nome' className='input' {...register("nome")}/>
         
         }

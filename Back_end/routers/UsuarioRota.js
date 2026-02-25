@@ -8,4 +8,4 @@ router.post("/",UsuarioController.cadastro);
 router.post("/login",UsuarioController.login);
 router.patch("/:id",UsuarioController.atualizar);
 router.delete("/:id",UsuarioController.excluir);
-export default { router };
+export default router ;

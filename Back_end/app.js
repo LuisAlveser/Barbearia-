@@ -11,10 +11,10 @@ app.use(cors());
 app.use(express.json());
 
 
-app.use("/usuario", UsuarioRota.router);
+app.use("/usuario", UsuarioRota);
 app.use(autenticacao);
-app.use("/barbeiro", BarbeiroRota.router);
-app.use("/corte", CorteRota.router);
-app.use("/agendamento", AgendamentoRota.router);
+app.use("/barbeiro", BarbeiroRota);
+app.use("/corte", CorteRota);
+app.use("/agendamento", AgendamentoRota);
 
 export default app;

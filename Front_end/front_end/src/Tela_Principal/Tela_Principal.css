@@ -1,0 +1,85 @@
+.cabecalho{
+    width: 100%;
+    height: 120px;
+    background-image:url("C:\Users\Luis\Desktop\Barbeaira\Front_end\front_end\src\assets\Imagem_fundo_cabeçalho.avif") ;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0; 
+   gap: 500px;
+}
+.cab{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Logocab{
+    width: 300x;
+    height: 150px;
+   
+    display: flex;
+    justify-content: center;
+}
+.NomeSite{
+    color:white;
+}
+.iconUser{
+    width: 30px;
+    height: 30px;
+    color: white;
+    display: flex;
+   
+}
+.usuarioOpcao{
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
+  
+}
+.logoItens{
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    gap: 5px;
+  
+}
+.regraUsuario{
+    display: flex;
+    width: 100px;
+    justify-content: center;
+    background-color: forestgreen;
+    border-radius: 20px;
+}
+.botaotelaPrincipal{
+  width: 150px;
+  height: 25px;
+ 
+  color: white;
+  background-color:  rgb(26, 33, 49);
+  border-radius: 10px;
+  font-family: "Playfair Display";
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.form_barbeiro{
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.botao_form_barbeiro{
+ width: 100px;
+  height: 40px;
+  margin-top: 20px;
+  color: white;
+  background-color:  rgb(26, 33, 49);
+  border-radius: 10px;
+  font-family: "Playfair Display";
+  cursor: pointer;
+}

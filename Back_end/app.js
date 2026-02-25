@@ -4,9 +4,10 @@ import BarbeiroRota from "./routers/BarbeiroRota.js";
 import CorteRota from "./routers/CorteRota.js";
 import AgendamentoRota from "./routers/AgendamentoRota.js";
 import autenticacao from './middleware/autenticacao.js'
-
+import  cors from 'cors';
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 

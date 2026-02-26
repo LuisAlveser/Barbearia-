@@ -1,13 +1,19 @@
 import  db from "../models/index.js"
 import { Model, where } from "sequelize";
-const {Cortes} = db;
+const {Cortes ,Barbeiro} = db;
 
 async function adicionarCorte(req,res) {
     try {
+        const id_user =req.params.id_user
+        const barbeiro=await Barbeiro.findOne({where:{id_user:id_user}})
+       
+        if(!barbeiro){
+             return res.status(404).json({mensagem:"ID do barbeiro não encontrada"})
+        }
         const corte={
-          id_barbeiro: req.params.id_barbeiro,
+          id_barbeiro:barbeiro.id,
           nome: req.body.nome,
-          preco:req.body.preco
+          preco:parseFloat(req.body.preco)
         }
         
         const cortecriado= await Cortes.create(corte)
@@ -17,7 +23,7 @@ async function adicionarCorte(req,res) {
         }
         
     } catch (error) {
-        
+        console.error(error);
          return res.status(500).json({mensagem:"Erro ao adicionar corte",error})
     }
 }

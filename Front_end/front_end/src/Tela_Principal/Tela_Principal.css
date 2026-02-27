@@ -11,7 +11,8 @@
    gap: 400px;
 }
 .cab{
-    height: 100%;
+    width: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,6 +70,19 @@
   justify-content: center;
   text-align: center;
 }
+.botaotela{
+  width: 100px;
+  height: 25px;
+ 
+  color: white;
+  background-color:  rgb(26, 33, 49);
+  border-radius: 10px;
+  font-family: "Playfair Display";
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
 .form_barbeiro{
 display: flex;
 flex-direction: column;
@@ -108,7 +122,7 @@ align-items: center;
    border-radius: 20px;
     
 }
-.iconBarbeiro{
+.iconBarbeiroTelaPrincipal{
     width: 100px;
     height: 50px;
 }

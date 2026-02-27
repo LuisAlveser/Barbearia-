@@ -1,5 +1,5 @@
 import '../Tela_Principal/Tela_Principal.css'
-import { useNavigate,useLocation ,useNavigation} from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import Logo from "../assets/Logo.png"
 import { jwtDecode } from "jwt-decode";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -113,8 +113,8 @@ function Cabecalho ({mudarform,decode,token}){
             { decode.regra==="BARBEIRO"?"CADASTRE CORTES":"TRABALHE AQUI"}
           </button>
          
-          
-          <button className='botaotelaPrincipal' onClick={sair} >Sair</button>
+           <button className='botaotela' >Agenda</button>
+          <button className='botaotela' onClick={sair} >Sair</button>
         
          
         </div>
@@ -122,7 +122,11 @@ function Cabecalho ({mudarform,decode,token}){
 </>
     )
 }
-function MostrarBarbeiros({barbeiros}){
+function MostrarBarbeiros({barbeiros, dadosUsuario}){
+     const navegation=useNavigate();
+    const verBarbeiro=(barbeiro,dadosUsuario)=>{
+        navegation("/Tela_Barbeiro", { state:{ dados: barbeiro,dadosUsuario}})
+    }
     return(
     <>
       <div className='lista'>
@@ -131,10 +135,10 @@ function MostrarBarbeiros({barbeiros}){
             <li key={barbeiro.id} className='barbeiro'> 
              <div className='conteudo'>
                 <div className='usuario_img'>
-                <h1 className='textoBarbeiro'> <FaRegUserCircle className='iconBarbeiro'/>{barbeiro.Usuario.nome} </h1>
+                <h1 className='textoBarbeiro'> <FaRegUserCircle className='iconBarbeiroTelaPrincipal'/>{barbeiro.Usuario.nome} </h1>
              </div>
                 <h1 className='textoBarbeiro'>Bio: {barbeiro.bio} </h1>
-                <button className='botaotelaPrincipal' >Ver Barbeiro</button>
+                <button className='botaotelaPrincipal' onClick={()=>{verBarbeiro(barbeiro,dadosUsuario)}} >Ver Barbeiro</button>
            </div> 
         </li>
         ))}
@@ -153,9 +157,12 @@ function Tela_Principal (){
      const location =  useLocation();
      const dados=location.state||{}
      const token=dados.dados?.token
+
+     const dadosnavegator=location.state||{}
      const [dadosUsuario, setDadosUsuario] = useState(() => {
      return token ? jwtDecode(token) : null;
   });
+  console.log(dadosUsuario)
   const carregarBarbeiros=()=>{
      axios.get("http://localhost:3001/barbeiro/", {
       headers: { Authorization: `Bearer ${token}` }
@@ -175,7 +182,7 @@ function Tela_Principal (){
          {formulario ?<Formulario  user={decode} setForm={setForm} decode={decode} 
          token={token} aoSucesso={()=>setDadosUsuario({...dadosUsuario,regra:"BARBEIRO"})}/>:null
          }
-         <MostrarBarbeiros  barbeiros={barbeiros} />
+         <MostrarBarbeiros  barbeiros={barbeiros} dadosUsuario={dadosUsuario}/>
   </div>
 </>
     

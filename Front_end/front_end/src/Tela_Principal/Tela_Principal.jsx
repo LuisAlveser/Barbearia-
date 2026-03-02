@@ -91,7 +91,11 @@ const cadastroCorte= async (data,id_user)=>{
 }
 
 
-function Cabecalho ({mudarform,decode,token}){
+function Cabecalho ({mudarform,decode,token,agenda,setAgenda
+}){
+    const abrirAgenda=()=>{
+        setAgenda(!agenda)
+    }
    const navegation=useNavigate();
     const sair=()=>{
         console.log(token)
@@ -113,7 +117,7 @@ function Cabecalho ({mudarform,decode,token}){
             { decode.regra==="BARBEIRO"?"CADASTRE CORTES":"TRABALHE AQUI"}
           </button>
          
-           <button className='botaotela' >Agenda</button>
+           <button className='botaotela' onClick={abrirAgenda} >Agenda</button>
           <button className='botaotela' onClick={sair} >Sair</button>
         
          
@@ -121,6 +125,9 @@ function Cabecalho ({mudarform,decode,token}){
     </header>
 </>
     )
+}
+function MostrarAgenda(){
+    return(<></>)
 }
 function MostrarBarbeiros({barbeiros, dadosUsuario}){
      const navegation=useNavigate();
@@ -150,6 +157,7 @@ function MostrarBarbeiros({barbeiros, dadosUsuario}){
 
 function Tela_Principal (){
     const [formulario,setForm]=useState(false)
+     const [agenda,setAgenda]=useState(false)
      const mudarform=()=>{
         setForm(!formulario)
      }
@@ -157,27 +165,32 @@ function Tela_Principal (){
      const location =  useLocation();
      const dados=location.state||{}
      const token=dados.dados?.token
-
-     const dadosnavegator=location.state||{}
      const [dadosUsuario, setDadosUsuario] = useState(() => {
      return token ? jwtDecode(token) : null;
   });
-  console.log(dadosUsuario)
+  //console.log(dadosUsuario)
   const carregarBarbeiros=()=>{
+     try{
      axios.get("http://localhost:3001/barbeiro/", {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response =>{
         if(response.data){
         setBarbeiros(response.data)   
-    }}).catch(() => console.log("Erro ao buscar barbeiros"));
+    }})
+} catch(error){
+     console.log("Erro ao buscar barbeiros",error);
+}
+    
 }
      useEffect(() => { carregarBarbeiros(); }, [dadosUsuario]);
 
      const decode=jwtDecode(dados.dados.token)
     return(
       <>
-       <Cabecalho formulario={formulario} mudarform={mudarform} decode={dadosUsuario} token={token}/>
+       <Cabecalho formulario={formulario} mudarform={mudarform} decode={dadosUsuario} token={token} agenda={agenda}
+       setAgenda={setAgenda}
+       />
         <div className='cab'>
          {formulario ?<Formulario  user={decode} setForm={setForm} decode={decode} 
          token={token} aoSucesso={()=>setDadosUsuario({...dadosUsuario,regra:"BARBEIRO"})}/>:null

@@ -20,13 +20,25 @@
 .text{
     color: rgb(26, 33, 49) ;
 }
+.icon{
+      color: rgb(26, 33, 49) ;
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+}
+.iconLixo{
+      color: red;
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+}
 .corte{
     display: flex;
     list-style: none;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    gap: 30px;
+    gap: 20px;
 }
 .divisor{
     width: 100%;
@@ -42,4 +54,24 @@
   border-radius: 10px;
   font-family: "Playfair Display";
   cursor: pointer;
+}
+.iconsDiv{
+    display: flex;
+    justify-items: center;
+    flex-direction: row;
+    gap: 20px;
+}
+.TituloAgenda{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    padding-top: 200px;
+}
+.formAgenda{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+ 
 }

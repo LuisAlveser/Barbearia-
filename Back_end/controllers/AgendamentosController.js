@@ -1,15 +1,13 @@
 import  db from "../models/index.js"
 import { Model, where } from "sequelize";
 const {Agendamentos,Usuario,Barbeiro} = db;
-import { parseISO, isBefore, getHours, startOfHour } from 'date-fns';
+import { parseISO, isBefore, getHours, startOfHour,format } from 'date-fns';
 
 async function criarHorario(req,res) {
 
    try {
     let data= req.body.data
-    if (data.endsWith('Z')) {
-      data = data.slice(0, -1); 
-    }
+  
   
     const dataAgendamento = startOfHour(parseISO(data));
        
@@ -21,16 +19,17 @@ async function criarHorario(req,res) {
    if (hour < 8 || hour >= 18) {
      return res.status(500).json({mensagem:"O prestador não atende neste horário."});
 } 
-    const cliente= await Usuario.findByPk(req.body.id_cliente)
-    const barbeiro= await Barbeiro.findByPk(req.body.id_barbeiro)
+    const dataFormatada = format(dataAgendamento, 'yyyy-MM-dd HH:mm:ss');
+    const cliente= await Usuario.findByPk(req.params.id_cliente)
+    const barbeiro= await Barbeiro.findByPk(req.params.id_barbeiro)
    
     if(!cliente||!barbeiro){
          return res.status(404).json({mensagem:"Usuário ou Barbeiro não existem"});
     }
     const agendamento={
-         id_cliente: req.body.id_cliente,
-        id_barbeiro: req.body.id_barbeiro,
-        data: req.body.data,
+         id_cliente: cliente.id,
+        id_barbeiro: barbeiro.id,
+        data: dataFormatada,
         cancelamento:false
     }
    

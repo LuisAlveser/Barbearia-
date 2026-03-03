@@ -1,19 +1,27 @@
-# ✂️ Corte Já - Sistema de Agendamento
+✂️ Corte Já - Sistema de Agendamento de Barbearia
+O Corte Já é uma aplicação Full Stack desenvolvida para conectar clientes a barbeiros, permitindo a gestão de perfis, cadastro de serviços (cortes) e agendamentos em tempo real.
 
-Sistema Full Stack para gestão de barbearias, permitindo agendamentos online e controle de agenda para barbeiros.
 
-## 📁 Estrutura do Projeto
-- **Back_end**: API Node.js com Sequelize e JWT.
-- **Front_end**: Aplicação React com Hooks, Zod e Axios.
+🚀 Tecnologias Utilizadas
+Frontend
+React.js: Biblioteca principal para construção da interface.
+React Router Dom: Gerenciamento de rotas e navegação.
+Axios: Consumo da API REST.
+Zod & React Hook Form: Validação de formulários e schemas.
+React Icons: Biblioteca de ícones.
 
-## 🛠️ Tecnologias Utilizadas
-- React.js / Node.js
-- MySQL (ou seu banco atual)
-- Docker (Configuração em andamento)
-- JWT para Autenticação
+Backend
+Node.js: Ambiente de execução Javascript.
+Express: Framework para construção da API.
+PostgreSQL: Banco de dados relacional.
+Sequelize: ORM para mapeamento e manipulação de dados.
+JWT (JSON Web Token): Autenticação e segurança das rotas.
+Jest: Framework de testes para garantir a qualidade com testes unitários.
 
-## 🚀 Como testar
-1. Clone o repositório.
-2. Configure o banco de dados no `Back_end`.
-3. Rode `npm install` em ambas as pastas.
-4. Inicie com `npm start` ou `npm run dev`.
+🛠️ Funcionalidades
+Autenticação: Cadastro e Login de usuários com diferenciação de níveis (CLIENTE e BARBEIRO).
+Perfil do Barbeiro: Visualização de bio, fotos e lista de serviços oferecidos.
+Gestão de Serviços: Barbeiros podem cadastrar, editar e excluir seus tipos de corte e preços.
+Navegação Inteligente: Sistema de busca e listagem de profissionais disponíveis.
+Segurança: Proteção de rotas sensíveis utilizando middlewares de autenticação JWT.
+

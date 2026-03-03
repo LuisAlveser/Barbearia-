@@ -41,11 +41,35 @@ function Cabecalho ({usuario,dadosCompletos}){
 </>
     )
 }
-function MostrarBarbeiroeCortes({cortes,usuario,barbeiro,setFormAgenda,formAgenda}){
+function MostrarBarbeiroeCortes({token,cortes,setCortes,usuario,barbeiro,setFormAgenda,formAgenda,form,setForm,setuniCorte}){
  //console.log("Dados que chegaram do Barbeiro:", barbeiro);
  //console.log("Dados que dadosCompletos id user :",usuario?.id);
 //console.log("Dados de barbeiro id user ", barbeiro?.id_user);
+
+const excluirCorte=async(id)=>{
+    try {
+        await axios.delete(`http://localhost:3001/corte/${id}`,{
+            headers:{
+               Authorization: `Bearer ${token}` 
+            }
+        })
+        .then(response=>{
+            if(response.data){
+                alert("Corte excluido com sucesso")
+                setCortes(cortes.filter(p=>p.id!==id))
+
+            }
+        })
+    } catch (error) {
+         alert("Erro em excluir corte",error)
+    }
+}
+const atualizar_Corte=(corte)=>{
+    setuniCorte(corte)
+    setForm(!form)
+}
 const AtivarAgendamento=()=>{
+    
     setFormAgenda(!formAgenda);
 }
   if (!barbeiro) {
@@ -74,8 +98,8 @@ const AtivarAgendamento=()=>{
                     <h3 className='text'>R$ {corte.preco}</h3>
                     {id_barbeiro===id_usuario?(
                     <div className='iconsDiv'>
-                    <FaPen className='icon' /> 
-                    <FaTrash className='iconLixo' />
+                    <FaPen className='icon' onClick={()=>{atualizar_Corte(corte)}} /> 
+                    <FaTrash className='iconLixo' onClick={()=>{excluirCorte(corte.id)}} />
                     
                 </div>
                   ):( null
@@ -132,8 +156,7 @@ function Agendamento({usuario,barbeiro,formAgenda,setFormAgenda,token}){
 }catch (error) {
       console.error(error);
       const mensagemErro = error.response?.data?.mensagem || "Erro ao agendar";
-      alert(mensagemErro);
-      return  alert("Erro em agendar barbeiro",mensagemErro)
+      alert("Erro em agendar barbeiro",mensagemErro)
     }
         
    
@@ -150,6 +173,79 @@ function Agendamento({usuario,barbeiro,formAgenda,setFormAgenda,token}){
   </>   
   )
 }
+ const formSchemaCorte=z.object({
+   
+   preco: z.coerce.number().min(0.1, "O preço deve ser maior que zero"),
+    nome:z.string().min(5,"O nome do corte deve ter mais caracteres")
+})
+function Formulario({decode, form, setForm, token, uniCorte,cortes,setCortes}){
+    
+    const { 
+    register, //Pega as informações dos inputs
+    handleSubmit, 
+    reset,
+    formState: { errors },//Trata os erros dos inputs
+  } = useForm({
+    resolver: zodResolver(formSchemaCorte),
+    defaultValues: {
+      nome: uniCorte?.nome,
+      preco: uniCorte?.preco
+    }
+  });
+
+  
+const editarCorte= async (data)=>{
+    console.log(data)
+   try{
+     console.log("ID do corte que será atualizado:", uniCorte.id);
+     await axios.patch(`http://localhost:3001/corte/${uniCorte.id}`,data,{
+        headers: {            
+            Authorization:`Bearer ${token}` 
+        }
+    })
+   .then(response=>{
+      if(response.data){
+        alert("Corte atualizado  com sucesso");
+       
+         const listaAtualizada = cortes.map((item) =>
+                        item.id === uniCorte.id 
+                        ? { ...item, nome: data.nome, preco: data.preco } 
+                        : item
+                    );
+                setCortes(listaAtualizada)
+               
+        return  setForm(false)
+      }
+   })
+}catch(error){
+    return alert("Erro em atualizar corte",error)
+   
+}
+
+}
+    return(
+        <>
+        <form className='form_barbeiro'onSubmit={handleSubmit(editarCorte)} >
+               
+            <div className='TituloAgenda' >
+           <h1>Atualizar corte</h1>
+          
+           <IoMdClose className='iconLixo' onClick={() => setForm(false)}/>
+            </div>
+            <>
+              <input className='input' placeholder='Nome' {...register("nome")}  />
+              <input className='input' placeholder='Preço' {...register("preco")}  />
+            </>
+             {errors.nome && <span className="mensagem-erro">{errors.nome.message}</span>}
+             {errors.preco && <span className="mensagem-erro">{errors.preco.message}</span>}
+            
+              <button className='botao_form_barbeiro'>Atualizar</button>
+         </form>
+        </>
+    )
+}
+
+
 
 
 function Tela_Barbeiro(){
@@ -159,8 +255,13 @@ function Tela_Barbeiro(){
   const dados=location.state||{}
   const token =localStorage.getItem("token")
   //console.log(dados.dados.id)
+ 
+  const [form,setForm]=useState(false)
+  const [uniCorte,setuniCorte]=useState([])
+  
   const id_barbeiro=dados.dados?.id;
   const [formAgenda,setFormAgenda]=useState(false)
+
 
    const carregandoDadosIniciais=async()=>{
     try {
@@ -192,10 +293,14 @@ function Tela_Barbeiro(){
            
               {formAgenda?(<Agendamento  token={token} usuario={dados.dadosUsuario} barbeiro={barbeiro}  formAgenda={formAgenda} setFormAgenda={setFormAgenda}
               />
-              ):(  <MostrarBarbeiroeCortes
-              cortes={cortes}  usuario={dados.dadosUsuario} barbeiro={barbeiro} formAgenda={formAgenda} setFormAgenda={setFormAgenda}
+              ):(form?<Formulario form={form} setForm={setForm} uniCorte={uniCorte} setuniCorte={setuniCorte} token={token}
+              cortes={cortes} setCortes={setCortes}/>:
+                
+            <MostrarBarbeiroeCortes
+              cortes={cortes} setCortes={setCortes}  usuario={dados.dadosUsuario} barbeiro={barbeiro} formAgenda={formAgenda} setFormAgenda={setFormAgenda} form={form}
+              setForm={setForm} uniCorte={uniCorte} setuniCorte={setuniCorte} token={token}
               />
-            )}
+              )}
   </div>
         </>
     )

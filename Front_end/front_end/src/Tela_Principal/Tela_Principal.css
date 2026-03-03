@@ -110,8 +110,8 @@ align-items: center;
 
 }
 .conteudo{
-    width: 400px;
-    height: 200px;
+    width: 700px;
+    min-height:min-content;
     display: flex;
     flex-direction: row;
     justify-items: center;
@@ -147,4 +147,60 @@ align-items: center;
 .barbeiro{
     margin-top: 20px;
 }
+.texto_agenda{
+    color: white;
+}
+.Agenda{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: min-content;
+}
+.Titulo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.conteudo_lista_agenda{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+.botao_cancelamento{
+     width: 150px;
+  height: 30px;
+  margin-top: 10px;
+  color: white;
+  background-color:  rgb(26, 33, 49);
+  border-radius: 10px;
+  font-family: "Playfair Display";
+  cursor: pointer;
+}
+.texto_cancelado{
+  width: 190px;
+  border-radius: 20px;
+   font-family: "Playfair Display";
+   font-style: oblique;
+   background-color: red;
+  color: white; 
+}
+.botaotelaVerBarbeiro{
+  width: 150px;
+  height: 25px;
+  margin-bottom: 10px;
+  color: white;
+  background-color:  rgb(26, 33, 49);
+  border-radius: 10px;
+  font-family: "Playfair Display";
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
 

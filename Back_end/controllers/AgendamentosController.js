@@ -53,7 +53,20 @@ async function criarHorario(req,res) {
 async function buscarAgendamentoPorCliente(req,res) {
     const id_cliente=req.params.id_cliente
     try {
-        const agendamentos=await Agendamentos.findAll({where:{id_cliente:id_cliente}})
+        const agendamentos = await Agendamentos.findAll({
+  where: { 
+    id_cliente: id_cliente
+  },
+  include: [
+    {
+      model: Usuario,
+      attributes: { exclude: ['senha'] }
+    },
+    {
+      model: Barbeiro
+    }
+  ]
+});
         if(agendamentos.length>0){
             return res.status(200).json(agendamentos)
         }else{
@@ -66,9 +79,27 @@ async function buscarAgendamentoPorCliente(req,res) {
     
 }
 async function buscarAgendamentoPorBardeiro(req,res) {
-    const id_barbeiro=req.params.id_barbeiro
+    const id=req.params.id_barbeiro
     try {
-        const agendamentos=await Agendamentos.findAll({where:{id_barbeiro:id_barbeiro}})
+        const id_barbeiro=await Barbeiro.findOne({where:{id_user:id}})
+        console.log(id_barbeiro)
+        if(!id_barbeiro){
+             return res.status(404).json({mensagem:"Não barbeiro não cadastrado"})
+        }
+      const agendamentos = await Agendamentos.findAll({
+  where: { 
+    id_barbeiro: id_barbeiro.id 
+  },
+  include: [
+    {
+      model: Usuario,
+      attributes: { exclude: ['senha'] }
+    },
+    {
+      model: Barbeiro
+    }
+  ]
+});
         if(agendamentos.length>0){
             return res.status(200).json(agendamentos)
         }else{

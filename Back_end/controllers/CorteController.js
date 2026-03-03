@@ -44,14 +44,15 @@ async function excluir(req,res) {
     
 }
 async function atualizar(req,res) {
-    const id =req.params.id
      try {
+         const id_corte =req.params.id
+         console.log(id_corte)
         const corte={
         nome:req.body.nome,
-        preco:req.body.preco
+        preco:parseFloat(req.body.preco)
         }
-        const corteatualizado=await Cortes.update(corte,{where:{id:id}})
-        if(corteatualizado.length>0){
+        const corteatualizado=await Cortes.update(corte,{where:{id:id_corte}})
+        if(corteatualizado>0){
             return res.status(200).json({mensagem:"Cortes atualizado com sucesso"})
         }else{
              return res.status(404).json({mensagem:"Corte não encontrado"})

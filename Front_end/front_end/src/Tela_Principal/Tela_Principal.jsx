@@ -8,11 +8,11 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios"
-
+import { IoMdClose } from "react-icons/io";
 
 const formSchema=z.object({
-    bio:z.string().min(5,"A biografia deve ter mais caracteres"),
-    nome:z.string().min(5,"O nome do corte deve ter mais caracteres")
+    bio:z.string().min(5,"A biografia deve ter mais caracteres").max(1000),
+   
 })
  const formSchemaCorte=z.object({
    
@@ -73,7 +73,7 @@ const cadastroCorte= async (data,id_user)=>{
         <form className='form_barbeiro' onSubmit={handleSubmit(cadatroBarbeiro)}>
            <h1>{decode?.regra === "BARBEIRO" ? "Novo Corte" : "Registre-se"}</h1>
             {decode?.regra==="CLIENTE"?(
-            <input className='input' placeholder='Bio' {...register("bio")}  />
+            <input className='input'type='text' placeholder='Bio' {...register("bio")}  />
             ):(
             <>
               <input className='input' placeholder='Nome' {...register("nome")}  />
@@ -126,9 +126,7 @@ function Cabecalho ({mudarform,decode,token,agenda,setAgenda
 </>
     )
 }
-function MostrarAgenda(){
-    return(<></>)
-}
+
 function MostrarBarbeiros({barbeiros, dadosUsuario}){
      const navegation=useNavigate();
     const verBarbeiro=(barbeiro,dadosUsuario)=>{
@@ -145,7 +143,7 @@ function MostrarBarbeiros({barbeiros, dadosUsuario}){
                 <h1 className='textoBarbeiro'> <FaRegUserCircle className='iconBarbeiroTelaPrincipal'/>{barbeiro.Usuario.nome} </h1>
              </div>
                 <h1 className='textoBarbeiro'>Bio: {barbeiro.bio} </h1>
-                <button className='botaotelaPrincipal' onClick={()=>{verBarbeiro(barbeiro,dadosUsuario)}} >Ver Barbeiro</button>
+                <button className='botaotelaVerBarbeiro' onClick={()=>{verBarbeiro(barbeiro,dadosUsuario)}} >Ver Barbeiro</button>
            </div> 
         </li>
         ))}
@@ -153,14 +151,100 @@ function MostrarBarbeiros({barbeiros, dadosUsuario}){
  </div>
 </>)
 }
+function MostrarAgenda({agenda,setAgenda,token,decode,horarios,sethorarios}){
+    console.log(decode.regra)
+ const mostarhorarios= async()=>{
+        const rota =decode.regra==="CLIENTE"? "cliente" : "barbeiro"
+            try{
+            await axios.get(`http://localhost:3001/agendamento/${rota}/${decode.id}`,{
+        headers: {            
+            Authorization: `Bearer ${token}` 
 
+        }}).then(response=>{
+            if(response.data && response.data.length > 0){
+              return  sethorarios(response.data)
+            }})
+    }catch(error){
+        if (error.response && error.response.status === 404) {
+      sethorarios([]); 
+    } else {
+      console.error("Erro real de servidor:", error);
+      alert("Erro ao carregar agenda.");
+    }
+    }
+   
+    
+}
+const cancelarhorario=async(id)=>{
+   
+    try {
+          await axios.patch(`http://localhost:3001/agendamento/${id}`,{},{
+        headers: {            
+            Authorization: `Bearer ${token}` 
+
+        }}).then(response=>{
+            if(response.data){
+              
+                sethorarios(horarios.map(h=>h.id===id?{...h,cancelamento:true}:h))
+                 return  alert("Cancelamneto realizado com sucesso")
+            }
+    })}
+     catch (error) {
+     return   alert("Erro em cancelar  horário",error)
+    }
+}
+ useEffect(() => {
+     mostarhorarios(); 
+    }, [decode.id]);
+ const fechar=()=>{
+    setAgenda(!agenda)
+ }
+ const tratarhorario=(horario)=>{
+    const [data,hora]=horario.split(" ")
+    const [ano,mes,dia]=data.split("-")
+    const datafromatada=`${dia}/${mes}/${ano}  ${hora}`
+    return datafromatada
+ }
+     return(
+       <>
+      <div className='Agenda'>
+          <div className='Titulo'>
+          <h1 className='texto_agenda'>Agenda de Horários</h1>
+          < IoMdClose className='iconLixo' onClick={fechar}/>
+          </div>
+        <ul>
+       {
+        horarios.length > 0?(
+       horarios&& horarios.map((horario)=>(
+         
+          <li key={horario.id} className='conteudo_lista_agenda' >
+            <h2 className='texto_agenda'>Cliente: {horario.Usuario.nome} </h2>
+             <h2 className='texto_agenda'>Horário: {tratarhorario(horario.data)}</h2>
+             
+             {
+                horario.cancelamento===true?(<p className='texto_cancelado'>HORÁRIO CANCELADO</p>):(
+             <button className='botao_cancelamento' onClick={()=>{cancelarhorario(horario.id)}}>CANCELAR </button>
+                )
+                
+            }
+          </li>
+        ))
+    ):(
+      <h1 >Nenhum horário agendado.</h1>
+    )}
+     </ul>
+   </div> 
+    </>)
+}
 
 function Tela_Principal (){
     const [formulario,setForm]=useState(false)
      const [agenda,setAgenda]=useState(false)
+
      const mudarform=()=>{
         setForm(!formulario)
      }
+     const [horarios,sethorarios]=useState([])
       const [barbeiros,setBarbeiros]=useState([])
      const location =  useLocation();
      const dados=location.state||{}
@@ -195,7 +279,10 @@ function Tela_Principal (){
          {formulario ?<Formulario  user={decode} setForm={setForm} decode={decode} 
          token={token} aoSucesso={()=>setDadosUsuario({...dadosUsuario,regra:"BARBEIRO"})}/>:null
          }
-         <MostrarBarbeiros  barbeiros={barbeiros} dadosUsuario={dadosUsuario}/>
+        { agenda?<MostrarAgenda agenda={agenda}   setAgenda={setAgenda} token={token} decode={dadosUsuario} 
+         horarios={horarios} sethorarios={sethorarios}/>
+        :<MostrarBarbeiros  barbeiros={barbeiros} dadosUsuario={dadosUsuario}/>
+        }
   </div>
 </>
     

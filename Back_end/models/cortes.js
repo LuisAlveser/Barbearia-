@@ -1,8 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import {Model} from 'sequelize';
+export default (sequelize, DataTypes) => {
   class Cortes extends Model {
     /**
      * Helper method for defining associations.
@@ -10,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Cortes.belongsTo(models.Barbeiro,{foreignKey:"id_barbeiro"})
     }
   }
   Cortes.init({

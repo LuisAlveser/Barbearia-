@@ -1,8 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import {Model} from 'sequelize';
+export default  (sequelize, DataTypes) => {
   class Agendamentos extends Model {
     /**
      * Helper method for defining associations.
@@ -10,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Agendamentos.belongsTo(models.Usuario,{ foreignKey:"id_cliente"})
+      Agendamentos.belongsTo(models.Barbeiro,{ foreignKey:"id_barbeiro"})
     }
   }
   Agendamentos.init({

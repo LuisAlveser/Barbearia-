@@ -1,0 +1,206 @@
+.cabecalho{
+    width: 100%;
+    min-height: 120px;
+    background-image:url("C:\Users\Luis\Desktop\Barbeaira\Front_end\front_end\src\assets\Imagem_fundo_cabeçalho.avif") ;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0; 
+   gap: 360px;
+}
+.cab{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Logocab{
+    width: 300x;
+    height: 150px;
+   
+    display: flex;
+    justify-content: center;
+}
+.NomeSite{
+    color:white;
+}
+.iconUser{
+    width: 30px;
+    height: 30px;
+    color: white;
+    display: flex;
+   
+}
+.usuarioOpcao{
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
+  
+}
+.logoItens{
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    gap: 5px;
+  
+}
+.regraUsuario{
+    display: flex;
+    width: 100px;
+    justify-content: center;
+    background-color: forestgreen;
+    border-radius: 20px;
+}
+.botaotelaPrincipal{
+  width: 150px;
+  height: 25px;
+ 
+  color: white;
+  background-color:  rgb(26, 33, 49);
+  border-radius: 10px;
+  font-family: "Playfair Display";
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.botaotela{
+  width: 100px;
+  height: 25px;
+ 
+  color: white;
+  background-color:  rgb(26, 33, 49);
+  border-radius: 10px;
+  font-family: "Playfair Display";
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.form_barbeiro{
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.botao_form_barbeiro{
+ width: 100px;
+  height: 40px;
+  margin-top: 20px;
+  color: white;
+  background-color:  rgb(26, 33, 49);
+  border-radius: 10px;
+  font-family: "Playfair Display";
+  cursor: pointer;
+}
+
+.lista{
+    display: flex;
+    width: 200px;
+    min-height: 200px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+
+}
+.conteudo{
+    width: 700px;
+    min-height:min-content;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    background-color: white;
+    flex-direction: column;
+    align-items: center;
+   list-style: none;
+   border-radius: 20px;
+    
+}
+.iconBarbeiroTelaPrincipal{
+    width: 100px;
+    height: 50px;
+}
+.usuario_img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+.textoBarbeiro {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgb(26, 33, 49);
+}
+.listaBarbeiros{
+    list-style: none;
+  
+}
+.barbeiro{
+    margin-top: 20px;
+}
+.texto_agenda{
+    color: white;
+}
+.Agenda{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: min-content;
+}
+.Titulo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.conteudo_lista_agenda{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+.botao_cancelamento{
+     width: 150px;
+  height: 30px;
+  margin-top: 10px;
+  color: white;
+  background-color:  rgb(26, 33, 49);
+  border-radius: 10px;
+  font-family: "Playfair Display";
+  cursor: pointer;
+}
+.texto_cancelado{
+  width: 190px;
+  border-radius: 20px;
+   font-family: "Playfair Display";
+   font-style: oblique;
+   background-color: red;
+  color: white; 
+}
+.botaotelaVerBarbeiro{
+  width: 150px;
+  height: 25px;
+  margin-bottom: 10px;
+  color: white;
+  background-color:  rgb(26, 33, 49);
+  border-radius: 10px;
+  font-family: "Playfair Display";
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+

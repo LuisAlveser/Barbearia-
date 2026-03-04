@@ -3,7 +3,8 @@
     "username": "postgres",
     "password": "alegrete",
     "database": "Barbearia",
-    "dialect": "postgres"
+    "dialect": "postgres",
+     "host": "host.docker.internal"
   },
   "test": {
      "username": "postgres",

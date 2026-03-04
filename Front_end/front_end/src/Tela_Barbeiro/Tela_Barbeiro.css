@@ -9,6 +9,18 @@
     border-radius: 20px;
 
 }
+.cabecalhoTelaBarbeiro{
+    width: 100%;
+    min-height: 120px;
+    background-image:url("../assets/Imagem_fundo_cabeçalho.avif") ;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0; 
+   gap: 600px;
+}
 
 
 .iconBarbeiro{

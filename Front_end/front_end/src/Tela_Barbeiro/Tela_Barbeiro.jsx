@@ -23,7 +23,7 @@ function Cabecalho ({usuario,dadosCompletos}){
  
     return(
     <>
-      <header className='cabecalho'>
+      <header className='cabecalhoTelaBarbeiro'>
          <div className='logoItens'>
             <img src={Logo} className='Logocab' />
             <h1 className='NomeSite'>CORTE JÁ</h1>
@@ -75,6 +75,7 @@ const AtivarAgendamento=()=>{
   if (!barbeiro) {
     return <h1 className='text'>Carregando dados...</h1>;
   }
+ 
   const id_usuario=usuario?.id
   const id_barbeiro=barbeiro?.id_user
     return(
@@ -110,7 +111,7 @@ const AtivarAgendamento=()=>{
         </ul>
     )}
             <div className='divisor'></div>
-            {cortes.length === 0 ? "":
+            {cortes.length === 0||usuario.regra==="BARBEIRO"? "":
            <button className='botaoAgenda' onClick={AtivarAgendamento}>Agendar Horário</button>
             }
          </div>

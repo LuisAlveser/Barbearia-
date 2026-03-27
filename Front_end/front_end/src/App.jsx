@@ -48,12 +48,12 @@ const Cadastro= async (data)=>{
     if(response.data){
       setCarregando(false)
       localStorage.setItem("token",response.data.token)
-      navegation("/Tela_Principal", { state: { dados: response.data } })
+     return  navegation("/Tela_Principal", { state: { dados: response.data } })
 
-       console.log("Cadastro e login realizados!");
+       
     } else {
        setCarregando(false)
-        console.log("Usuário cadastrado com sucesso (sem token).");
+       return  alert("Email ou Senha estão errados.");
       }
     
   })

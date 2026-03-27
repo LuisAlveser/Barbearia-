@@ -1,7 +1,7 @@
 .cabecalho{
     width: 100%;
     min-height: 120px;
-    background-image:url("C:\Users\Luis\Desktop\Barbeaira\Front_end\front_end\src\assets\Imagem_fundo_cabeçalho.avif") ;
+    background-image:url("../assets/Imagem_fundo_cabeçalho.avif") ;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     display: flex;
